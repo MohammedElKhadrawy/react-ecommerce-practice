@@ -1,9 +1,17 @@
-.category {
-  width: 180px;
-  height: 180px;
+.category a {
+  text-decoration: none;
+  color: black;
+}
+
+.category a:hover {
+  text-decoration: underline;
 }
 
 .categoryImg {
+  /* Very important note! */
+  /* We use these styling properties on the (div wrapping the img) to appear as a placeholder/skeleton while the image is loading */
+  width: 180px;
+  height: 180px;
   overflow: hidden;
   border-radius: 50%;
   background-color: #f2f2f2;
