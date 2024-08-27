@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { TCategory } from '@customTypes/category';
-import { TLoad } from '@customTypes/shared';
+import { TLoading } from '@customTypes/shared';
 import actGetCategories from './act/actGetCategories';
 
+// we have to export this interface to solve the error in index.ts "exporting store"
 export interface ICategoriesState {
   records: TCategory[];
-  loading: TLoad;
+  loading: TLoading;
   error: string | null;
 }
 

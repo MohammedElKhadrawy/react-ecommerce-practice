@@ -6,9 +6,10 @@ import { Category } from '@components/eCommerce';
 
 const CategoriesPage = () => {
   const dispatch = useAppDispatch();
-  const { records, loading, error } = useAppSelector(
-    (state) => state.categories
-  );
+  const {
+    records,
+    // loading, error
+  } = useAppSelector((state) => state.categories);
 
   useEffect(() => {
     if (!records.length) {
