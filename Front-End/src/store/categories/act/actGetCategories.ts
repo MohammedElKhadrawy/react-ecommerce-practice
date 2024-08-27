@@ -15,24 +15,33 @@ const actGetCategories = createAsyncThunk(
       );
       return response.data;
 
-      // Ex: when we want to manipulate the data, we need to use <generic type> for better auto-completion
+      // Ex: when we want to manipulate the data, we need to use <generic type> like above for better auto-completion
       // const data = response.data.map((el) => el.id);
     } catch (error) {
+      // simplified error-handling
       if (axios.isAxiosError(error)) {
-        // Request was made but no response was received
-        if (error.request) {
-          return rejectWithValue(
-            'No response from server. Please try again later.'
-          );
-          // Server responded with a status code outside the 2xx range
-        } else if (error.response) {
-          return rejectWithValue(error.response.data.message || error.message);
-        }
+        return rejectWithValue(error.response?.data.message || error.message);
+      } else {
+        return rejectWithValue('An unexpected error occurred');
       }
-      // we need to make sure we return something with every single case cuz otherwise Typescript will get really mad xd
-      return rejectWithValue('An unexpected error occurred');
     }
   }
 );
 
 export default actGetCategories;
+
+// detailed error-handling
+
+// if (axios.isAxiosError(error)) {
+//   // Request was made but no response was received
+//   if (error.request) {
+//     return rejectWithValue(
+//       'No response from server. Please try again later.'
+//     );
+//     // Server responded with a status code outside the 2xx range
+//   } else if (error.response) {
+//     return rejectWithValue(error.response.data.message || error.message);
+//   }
+// }
+// // we need to make sure we return something with every single case cuz otherwise Typescript will get really mad xd
+// return rejectWithValue('An unexpected error occurred');

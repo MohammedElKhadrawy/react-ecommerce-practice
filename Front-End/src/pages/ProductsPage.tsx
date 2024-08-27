@@ -7,14 +7,12 @@ import {
 } from '@store/products/productsSlice';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Product } from '@components/eCommerce';
+import { Loading } from '@components/feedback';
 
 const ProductsPage = () => {
   const { prefix } = useParams();
   const dispatch = useAppDispatch();
-  const {
-    records,
-    // loading, error
-  } = useAppSelector((state) => state.products);
+  const { records, loading, error } = useAppSelector((state) => state.products);
 
   useEffect(() => {
     // we can safely use "type assertion" as string cuz we already made a guard for the route
@@ -42,7 +40,9 @@ const ProductsPage = () => {
 
   return (
     <Container>
-      <Row>{productsList}</Row>
+      <Loading status={loading} error={error}>
+        <Row>{productsList}</Row>
+      </Loading>
     </Container>
   );
 };

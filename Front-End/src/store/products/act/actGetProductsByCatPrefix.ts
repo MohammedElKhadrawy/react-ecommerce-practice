@@ -16,15 +16,10 @@ const actGetProductsByCatPrefix = createAsyncThunk(
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        if (error.request) {
-          return rejectWithValue(
-            "'No response from server. Please try again later.'"
-          );
-        } else if (error.response) {
-          return rejectWithValue(error.response.data.message || error.message);
-        }
+        return rejectWithValue(error.response?.data.message || error.message);
+      } else {
+        return rejectWithValue('An unexpected error occurred');
       }
-      return rejectWithValue('An unexpected error occurred');
     }
   }
 );

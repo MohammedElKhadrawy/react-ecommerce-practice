@@ -3,13 +3,13 @@ import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { actGetCategories } from '@store/categories/categoriesSlice';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Category } from '@components/eCommerce';
+import { Loading } from '@components/feedback';
 
 const CategoriesPage = () => {
   const dispatch = useAppDispatch();
-  const {
-    records,
-    // loading, error
-  } = useAppSelector((state) => state.categories);
+  const { records, loading, error } = useAppSelector(
+    (state) => state.categories
+  );
 
   useEffect(() => {
     if (!records.length) {
@@ -35,7 +35,9 @@ const CategoriesPage = () => {
 
   return (
     <Container>
-      <Row>{categoriesList}</Row>
+      <Loading status={loading} error={error}>
+        <Row>{categoriesList}</Row>
+      </Loading>
     </Container>
   );
 };
