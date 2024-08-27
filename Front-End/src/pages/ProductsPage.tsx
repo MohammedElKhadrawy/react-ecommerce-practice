@@ -5,9 +5,11 @@ import {
   actGetProductsByCatPrefix,
   productsCleanUp,
 } from '@store/products/productsSlice';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { Product } from '@components/eCommerce';
 import { Loading } from '@components/feedback';
+import { GridList } from '@components/common';
+import { TProduct } from '@customTypes/product';
 
 const ProductsPage = () => {
   const { prefix } = useParams();
@@ -24,24 +26,13 @@ const ProductsPage = () => {
     };
   }, [dispatch, prefix]);
 
-  const productsList =
-    records.length > 0
-      ? records.map((record) => (
-          <Col
-            xs={6}
-            key={record.id}
-            md={3}
-            className='d-flex justify-content-center mb-5 mt-2'
-          >
-            <Product {...record} />
-          </Col>
-        ))
-      : 'There are no products';
-
   return (
     <Container>
       <Loading status={loading} error={error}>
-        <Row>{productsList}</Row>
+        <GridList<TProduct>
+          records={records}
+          renderItem={(record) => <Product {...record} />}
+        />
       </Loading>
     </Container>
   );

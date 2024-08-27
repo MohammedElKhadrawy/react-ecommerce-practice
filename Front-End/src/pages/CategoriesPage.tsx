@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { actGetCategories } from '@store/categories/categoriesSlice';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { Category } from '@components/eCommerce';
 import { Loading } from '@components/feedback';
+import { GridList } from '@components/common';
+import { TCategory } from '@customTypes/category';
 
 const CategoriesPage = () => {
   const dispatch = useAppDispatch();
@@ -17,26 +19,14 @@ const CategoriesPage = () => {
     }
   }, [dispatch, records]);
 
-  const categoriesList =
-    // we have to check by length and not just "records" for validity
-    // cuz the initial value for records is an empty array [] which is a valid value!
-    records.length > 0
-      ? records.map((record) => (
-          <Col
-            xs={6}
-            key={record.id}
-            md={3}
-            className='d-flex justify-content-center mb-5 mt-2'
-          >
-            <Category {...record} />
-          </Col>
-        ))
-      : 'There are no categories';
-
   return (
     <Container>
       <Loading status={loading} error={error}>
-        <Row>{categoriesList}</Row>
+        {/* we can omit <TCategory> cuz ts is smart and automatically infers from component we will render */}
+        <GridList<TCategory>
+          records={records}
+          renderItem={(record) => <Category {...record} />}
+        />
       </Loading>
     </Container>
   );
