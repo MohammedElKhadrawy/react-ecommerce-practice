@@ -10,9 +10,7 @@ const actGetCategories = createAsyncThunk(
     const { rejectWithValue } = thunkAPI;
 
     try {
-      const response = await axios.get<TResponse>(
-        'http://localhost:5000/categories'
-      );
+      const response = await axios.get<TResponse>('/categories');
       return response.data;
 
       // Ex: when we want to manipulate the data, we need to use <generic type> like above for better auto-completion

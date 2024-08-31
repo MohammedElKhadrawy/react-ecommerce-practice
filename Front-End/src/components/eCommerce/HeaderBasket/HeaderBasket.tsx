@@ -5,7 +5,7 @@ import { useAppSelector } from '@store/hooks';
 import { getTotalCartQuantitySelector } from '@store/cart/selectors';
 
 import classes from './HeaderBasket.module.css';
-const { basketContainer, basketQuantity, pump } = classes;
+const { basketContainer, basketCart, basketQuantity, pump } = classes;
 
 const HeaderBasket = () => {
   const [isPumping, setIsPumping] = useState(false);
@@ -20,7 +20,7 @@ const HeaderBasket = () => {
 
   useEffect(() => {
     if (!totalQuantity) return;
-    
+
     setIsPumping(true);
 
     const debounceHandler = setTimeout(() => {
@@ -34,8 +34,11 @@ const HeaderBasket = () => {
 
   return (
     <div className={basketContainer}>
-      <Cart title='basket icon' />
-      <div className={totalQuantityStyle}>{totalQuantity}</div>
+      <div className={basketCart}>
+        <Cart title='basket icon' />
+        <div className={totalQuantityStyle}>{totalQuantity}</div>
+      </div>
+      <h3>Cart</h3>
     </div>
   );
 };

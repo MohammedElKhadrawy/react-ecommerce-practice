@@ -8,7 +8,7 @@ import {
 import { Container } from 'react-bootstrap';
 import { Product } from '@components/eCommerce';
 import { Loading } from '@components/feedback';
-import { GridList } from '@components/common';
+import { GridList, Heading } from '@components/common';
 import { TProduct } from '@customTypes/product';
 
 const ProductsPage = () => {
@@ -36,6 +36,9 @@ const ProductsPage = () => {
 
   return (
     <Container>
+      <Heading>
+        <span className='text-capitalize'>{prefix}</span> Products
+      </Heading>
       <Loading status={loading} error={error}>
         <GridList<TProduct>
           records={productsFullInfo}

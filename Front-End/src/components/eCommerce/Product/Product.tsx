@@ -42,7 +42,7 @@ const Product = memo(
           <img src={img} alt={title} />
         </div>
         <h2 title={title}>{title}</h2>
-        <h3>{price} EGP</h3>
+        <h3>{price.toFixed(2)} EGP</h3>
         <p
           className={maximumNotice}
           style={{ color: quantityReachedToMax ? 'red' : 'black' }}
