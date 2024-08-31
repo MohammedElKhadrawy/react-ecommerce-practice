@@ -1,4 +1,5 @@
-import { Button } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
+import { Button, Spinner } from 'react-bootstrap';
 import { TProduct } from '@customTypes/product';
 import { useAppDispatch } from '@store/hooks';
 import { addToCart } from '@store/cart/cartSlice';
@@ -7,10 +8,22 @@ import classes from './Product.module.css';
 const { product, productImg } = classes;
 
 const Product = ({ id, img, title, price }: TProduct) => {
+  const [isBtnClicked, setIsButtonClicked] = useState(false);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (!isBtnClicked) return;
+
+    const debounceHandler = setTimeout(() => {
+      setIsButtonClicked(false);
+    }, 300);
+
+    return () => clearTimeout(debounceHandler);
+  }, [isBtnClicked]);
 
   const addToCartHandler = () => {
     dispatch(addToCart(id));
+    setIsButtonClicked(true);
   };
 
   return (
@@ -24,8 +37,15 @@ const Product = ({ id, img, title, price }: TProduct) => {
         variant='info'
         style={{ color: 'white' }}
         onClick={addToCartHandler}
+        disabled={isBtnClicked}
       >
-        Add to cart
+        {isBtnClicked ? (
+          <>
+            <Spinner animation='border' size='sm' /> Loading...
+          </>
+        ) : (
+          'Add to cart'
+        )}
       </Button>
     </div>
   );
