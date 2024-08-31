@@ -15,6 +15,14 @@ const ProductsPage = () => {
   const { prefix } = useParams();
   const dispatch = useAppDispatch();
   const { records, loading, error } = useAppSelector((state) => state.products);
+  const cartItems = useAppSelector((state) => state.cart.items);
+
+  // we manage that here to avoid repeating the selector in every product (performance)
+  // This is much more scalable!
+  const productsFullInfo = records.map((product) => ({
+    ...product,
+    quantityInCart: cartItems[product.id] || 0,
+  }));
 
   useEffect(() => {
     // we can safely use "type assertion" as string cuz we already made a guard for the route
@@ -30,7 +38,7 @@ const ProductsPage = () => {
     <Container>
       <Loading status={loading} error={error}>
         <GridList<TProduct>
-          records={records}
+          records={productsFullInfo}
           renderItem={(record) => <Product {...record} />}
         />
       </Loading>

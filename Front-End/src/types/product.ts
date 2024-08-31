@@ -4,5 +4,6 @@ export type TProduct = {
   price: string;
   cat_prefix: string;
   img: string;
-  quantity?: number; // we make this optional cuz we will need it only in cart's productFullInfo
+  quantityInCart?: number; // we make this optional cuz we will need it only in cart's productFullInfo
+  max: number;
 };
